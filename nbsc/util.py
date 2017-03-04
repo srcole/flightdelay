@@ -191,8 +191,8 @@ def relation_quantiles(y_by_x, all_x = None, all_quantiles = None, make_plot = T
 			
 		quantile_cmap = getcmaprgb(N_quantiles, cm.jet)
 		for i in range(N_quantiles):
-			plt.plot(all_x,y_by_x_quantile[:,i],'.-',color=quantile_cmap[i], label=all_quantiles[i])
-		plt.xticks(all_x)
+			plt.plot(np.arange(N_x),y_by_x_quantile[:,i],'.-',color=quantile_cmap[i], label=all_quantiles[i])
+		plt.xticks(np.arange(N_x),all_x)
 		plt.legend()
 		
 	return y_by_x_quantile, all_quantiles
@@ -219,8 +219,8 @@ def relation_exceed(y_by_x, all_x = None, all_min = None, make_plot = True):
 			
 		min_cmap = getcmaprgb(N_min, cm.jet)
 		for i in range(N_min):
-			plt.plot(all_x,y_by_x_min[:,i],'.-',color=min_cmap[i], label=all_min[i])
-		plt.xticks(all_x)
+			plt.plot(np.arange(N_x),y_by_x_min[:,i],'.-',color=min_cmap[i], label=all_min[i])
+		plt.xticks(np.arange(N_x),all_x)
 		plt.legend()
 		
 	return y_by_x_min, all_min
@@ -238,7 +238,7 @@ def relation_mean(y_by_x, all_x = None, make_plot = True):
 	if make_plot:
 		if all_x is None:
 			all_x = np.arange(N_x)
-		plt.plot(all_x,y_by_x_mean,'k.-')
-		plt.xticks(all_x)
+		plt.plot(np.arange(N_x),y_by_x_mean,'k.-')
+		plt.xticks(np.arange(N_x),all_x)
 		
 	return y_by_x_mean
