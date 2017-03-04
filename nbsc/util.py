@@ -16,6 +16,13 @@ def load_data(data_folder = '/gh/data/flightdelay/', N_flights = None):
 		
 	return df_al, df_ap, df_fl
 
+def load_data_lines_and_ports(data_folder = '/gh/data/flightdelay/'):
+	"""Load all airline, airport, and flight data"""
+	df_al = pd.DataFrame.from_csv(data_folder+'airlines.csv')
+	df_ap = pd.DataFrame.from_csv(data_folder+'airports.csv')
+		
+	return df_al, df_ap
+
 
 def restrict_df(df, restriction):
 	"""Restrict `df` to only the rows in which the key of `restriction`
