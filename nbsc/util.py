@@ -38,6 +38,7 @@ def restrict_df(df, restriction):
 
 
 def load_data_SAN(data_folder = '/gh/data/flightdelay/',
+					old_data = False,
 					drop_cancelled = True):
 	"""Load flights departing from SAN"""
 	
@@ -46,7 +47,13 @@ def load_data_SAN(data_folder = '/gh/data/flightdelay/',
 	
 	# Restrict to SAN data
 	restrict = {}
-	restrict['ORIGIN_AIRPORT'] = ['SAN','14679',14679]
+	# If on old data, need to use the 5-digit airport code
+	if old_data:
+		restrict['ORIGIN_AIRPORT'] = ['SAN','14679',14679]
+	else:
+		restrict['ORIGIN_AIRPORT'] = ['SAN']
+
+	# Apply restriction
 	df_SAN = restrict_df(df_fl, restrict)
 
 	# If needed, remove the cancelled flights
