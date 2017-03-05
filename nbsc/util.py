@@ -90,7 +90,8 @@ def split_y_by_x(x, y, return_all_x = False, return_N_x = False):
 		
 def relation_explorer(df, key_predict, key_feature,
 					  analysis_fn, analysis_kwargs = {},
-					  restriction = None, feature_is_categorical = True, make_plot = True):
+					  restriction = None, feature_is_categorical = True, make_plot = True,
+					  return_all_x = False):
 	"""
 	Compute the relationship between two features in the data
 	
@@ -136,6 +137,8 @@ def relation_explorer(df, key_predict, key_feature,
 	else:
 		raise NotImplementedError('TODO')
 		
+	if return_all_x:
+		return out, all_x
 	return out
 	
 def relation_histogram(y_by_x, all_x = None, bin_edges = None, make_plot = True):
