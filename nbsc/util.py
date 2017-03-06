@@ -16,6 +16,13 @@ def load_data(data_folder = '/gh/data/flightdelay/', N_flights = None):
 		
 	return df_al, df_ap, df_fl
 
+def load_data_lines_and_ports(data_folder = '/gh/data/flightdelay/'):
+	"""Load all airline, airport, and flight data"""
+	df_al = pd.DataFrame.from_csv(data_folder+'airlines.csv')
+	df_ap = pd.DataFrame.from_csv(data_folder+'airports.csv')
+		
+	return df_al, df_ap
+
 
 def restrict_df(df, restriction):
 	"""Restrict `df` to only the rows in which the key of `restriction`
@@ -31,6 +38,7 @@ def restrict_df(df, restriction):
 
 
 def load_data_SAN(data_folder = '/gh/data/flightdelay/',
+					old_data = False,
 					drop_cancelled = True):
 	"""Load flights departing from SAN"""
 	
@@ -39,7 +47,13 @@ def load_data_SAN(data_folder = '/gh/data/flightdelay/',
 	
 	# Restrict to SAN data
 	restrict = {}
-	restrict['ORIGIN_AIRPORT'] = ['SAN','14679',14679]
+	# If on old data, need to use the 5-digit airport code
+	if old_data:
+		restrict['ORIGIN_AIRPORT'] = ['SAN','14679',14679]
+	else:
+		restrict['ORIGIN_AIRPORT'] = ['SAN']
+
+	# Apply restriction
 	df_SAN = restrict_df(df_fl, restrict)
 
 	# If needed, remove the cancelled flights
@@ -76,7 +90,8 @@ def split_y_by_x(x, y, return_all_x = False, return_N_x = False):
 		
 def relation_explorer(df, key_predict, key_feature,
 					  analysis_fn, analysis_kwargs = {},
-					  restriction = None, feature_is_categorical = True, make_plot = True):
+					  restriction = None, feature_is_categorical = True, make_plot = True,
+					  return_all_x = False, return_N_x = False):
 	"""
 	Compute the relationship between two features in the data
 	
@@ -122,7 +137,16 @@ def relation_explorer(df, key_predict, key_feature,
 	else:
 		raise NotImplementedError('TODO')
 		
-	return out
+	if return_all_x:
+		if return_N_x:
+			return out, all_x, N_x
+		else:
+			return out, all_x
+	else:
+		if return_N_x:
+			return out, N_x
+		else:
+			return out
 	
 def relation_histogram(y_by_x, all_x = None, bin_edges = None, make_plot = True):
 	"""Compute the histogram of y for all values of x"""
