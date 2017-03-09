@@ -22,9 +22,9 @@ def load_data(data_folder = '/gh/data/flightdelay/', N_flights = None):
     df_ap = pd.DataFrame.from_csv(data_folder+'airports.csv')
 
     if N_flights is None:
-        df_fl = pd.io.parsers.read_csv(data_folder+'flights2.csv')
+        df_fl = pd.io.parsers.read_csv(data_folder+'flights.csv')
     else:
-        df_fl = pd.io.parsers.read_csv(data_folder+'flights2.csv', nrows = N_flights)
+        df_fl = pd.io.parsers.read_csv(data_folder+'flights.csv', nrows = N_flights)
 
     return df_al, df_ap, df_fl
 
