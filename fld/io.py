@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 import numpy as np
 
@@ -18,8 +19,8 @@ def load_data(data_folder = '/gh/data/flightdelay/', N_flights = None):
         Flights data.
     """
 
-    df_al = pd.DataFrame.from_csv(data_folder+'airlines.csv')
-    df_ap = pd.DataFrame.from_csv(data_folder+'airports.csv')
+    df_al = pd.read_csv(os.path.join(data_folder, 'airlines.csv'))
+    df_ap = pd.read_csv(os.path.join(data_folder, 'airports.csv'))
 
     if N_flights is None:
         df_fl = pd.io.parsers.read_csv(data_folder+'flights.csv')
@@ -77,3 +78,22 @@ def restrict_df(df, restriction):
         df = pd.concat(df_keep)
 
     return df
+
+
+def select_busy_airports(df, n_flights=7300):
+    """Restrict DataFrame to only airports with a certain number of outgoing flights."""
+
+    all_airports, airport_inverse, airport_count = np.unique(df['ORIGIN_AIRPORT'],
+                                                             return_counts=True,
+                                                             return_inverse=True)
+
+    # Determine number of flights for the origin airport
+    n_flights_orig = np.zeros(len(airport_inverse))
+    for i in range(len(all_airports)):
+        n_flights_orig[np.where(airport_inverse==i)] = airport_count[i]
+
+    return df.loc[df.index[n_flights_orig >= n_flights]]
+
+
+def drop_cancelled(df):
+    return df[df['CANCELLED'] != 1]
