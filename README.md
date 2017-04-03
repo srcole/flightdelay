@@ -5,7 +5,12 @@ Analysis of delays of US flights in 2015.
 For a class project ([CSE 258](http://cseweb.ucsd.edu/classes/wi17/cse258-a/) at UCSD), we explored statistics on US domestic flights and created a model to predict if a flight would be delayed by 15 or more minutes.
 
 # Analysis
-* LIST NOTEBOOKS
+
+### 1. Trends in flight delays
+This notebook explores the statistical relationships between the delay of
+
+### 2. Predicting flight delays
+This notebook attempts to predict whether or not a flight will be delayed by more than 15 minutes using the features of flights explored in the former notebook.
 
 # Data acquisition and cleaning
 Download data that includes information on all domestic flights in 2015
